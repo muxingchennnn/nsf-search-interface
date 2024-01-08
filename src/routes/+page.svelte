@@ -5,7 +5,9 @@
 	import RightPanel from '../lib/components/RightPanel.svelte';
 	import Paginator from '../lib/components/Paginator.svelte';
 	import { paginate } from '$lib/utils/paginate';
+	import { onMount } from 'svelte';
 	import {
+		isLoading,
 		awardData,
 		searchTerm,
 		searchResults,
@@ -20,7 +22,6 @@
 	import { sortResults } from '$lib/utils/sortUtils';
 
 	export let data;
-
 	$: $awardData = data.awards.sort((a, b) => new Date(b.date) - new Date(a.date));
 
 	$: keywords = removeStopwords(parseQuery($searchTerm).includes);
@@ -67,7 +68,6 @@
 <div class="sticky top-0 z-50 mb-[2rem] border-b-[1px] border-solid border-border">
 	<Header />
 </div>
-
 <main class="mx-[auto] my-0 flex max-w-[1440px] justify-between gap-16 px-[2rem]">
 	<!-- left panel -->
 	<section class="left-panel min-w-[600px] basis-[60%]">
@@ -91,3 +91,6 @@
 		<RightPanel />
 	</section>
 </main>
+
+<style>
+</style>
