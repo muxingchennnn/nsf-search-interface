@@ -1,10 +1,19 @@
-export const ssr = false;
-
 import * as d3 from 'd3';
 import moment from 'moment';
 
+// export async function load() {
+// 	const awards = await d3.csv('/cise_awards.csv', parseData);
+// 	return {
+// 		awards
+// 	};
+// }
+
 export async function load() {
-	const awards = await d3.csv('/cise_awards.csv', parseData);
+	const [awardsResponse] = await Promise.all([import('$lib/data/cise_awards.csv?raw')]);
+
+	const awards = d3.csvParse(awardsResponse.default, parseData);
+	console.log(awards);
+
 	return {
 		awards
 	};
@@ -31,3 +40,5 @@ const amountFormatter = new Intl.NumberFormat('en-US', {
 	minimumFractionDigits: 0,
 	maximumFractionDigits: 0
 });
+
+export const ssr = false;
